@@ -1,0 +1,17 @@
+<project name="cdiexample">
+	
+	<property name="war_file" value="cdiexample.war" />
+	<property name="deploy_dir" value="/Users/rodrigotenorio/weblogic-autodeploy" />
+
+	<target name="clean-up">
+		<delete dir="target" includeemptydirs="true" />
+	</target>
+	
+	<target name="deploy">
+		<copy todir="${deploy_dir}" file="target/${war_file}" />
+	</target>
+	
+	<target name="undeploy">
+		<delete file="${deploy_dir}/${war_file}" />
+	</target>
+</project>
