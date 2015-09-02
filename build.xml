@@ -1,17 +1,35 @@
 <project name="cdiexample">
-	
+
+	<taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy" />
+
+	<property name="domain_dir" value="/Users/rodrigotenorio/Documents/Oracle/WebLogic/domains/tenorio-domain" />
 	<property name="war_file" value="cdiexample.war" />
-	<property name="deploy_dir" value="/Users/rodrigotenorio/weblogic-autodeploy" />
+	<property name="autodeploy_dir" value="${domain_dir}/autodeploy" />
+	<property name="deploy_dir" value="${domain_dir}/apps" />
+	<property name="app_name" value="cdiexample" />
+	<property name="adminurl" value="t3://localhost:7001" />
+	<property name="user" value="weblogic" />
+	<property name="password" value="weblogic01" />
 
 	<target name="clean-up">
 		<delete dir="target" includeemptydirs="true" />
 	</target>
-	
+
 	<target name="deploy">
 		<copy todir="${deploy_dir}" file="target/${war_file}" />
+		<wldeploy action="deploy" verbose="true" debug="true" name="${app_name}" source="${deploy_dir}/${war_file}" user="weblogic" password="weblogic01" adminurl="${adminurl}" targets="AdminServer" />
 	</target>
-	
+
+	<target name="auto-deploy">
+		<copy todir="${autodeploy_dir}" file="target/${war_file}" />
+	</target>
+
 	<target name="undeploy">
-		<delete file="${deploy_dir}/${war_file}" />
+		<wldeploy action="undeploy" verbose="true" debug="true" name="${app_name}" user="weblogic" password="weblogic01" adminurl="${adminurl}" targets="AdminServer" />
+		<delete file="${deploy_dir}/${war_file}"></delete>
+	</target>
+
+	<target name="auto-undeploy">
+		<delete file="${autodeploy_dir}/${war_file}" />
 	</target>
 </project>
