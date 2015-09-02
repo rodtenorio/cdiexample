@@ -32,4 +32,23 @@
 	<target name="auto-undeploy">
 		<delete file="${autodeploy_dir}/${war_file}" />
 	</target>
+
+	<target name="scp">
+		<exec dir="." executable="/usr/bin/scp" failonerror="true">
+			<arg value="-i" />
+			<arg value="/Users/rodrigotenorio/Documents/cloudkeys/rtenorio-cloud-trial-pk"/>
+			<arg value="target/${war_file}" />
+			<arg value="opc@129.152.132.177:/home/opc" />
+		</exec>
+	</target>
+
+	<target name="ssh">
+		<exec dir="." executable="/usr/bin/ssh" failonerror="true">
+			<arg value="-i" />
+			<arg value="/Users/rodrigotenorio/Documents/cloudkeys/rtenorio-cloud-trial-pk"/>
+			<arg value="opc@129.152.132.177" />
+			<arg value="./copyapp.sh" />
+			<arg value="${war_file}" />
+		</exec>
+	</target>
 </project>
